@@ -1,0 +1,3 @@
+[submodule "GuitarPedals"]
+	path = GuitarPedals
+	url = https://github.com/Varanda-Labs/GuitarPedals.git
