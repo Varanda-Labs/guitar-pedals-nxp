@@ -25,6 +25,8 @@
 #endif
 #include "fsl_debug_console.h"
 
+lv_indev_t * global_indev; // MV: make it global.
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -373,7 +375,7 @@ void lv_port_indev_init(void)
     lv_indev_drv_init(&indev_drv);
     indev_drv.type    = LV_INDEV_TYPE_POINTER;
     indev_drv.read_cb = DEMO_ReadTouch;
-    lv_indev_drv_register(&indev_drv);
+    global_indev = lv_indev_drv_register(&indev_drv);
 }
 
 #if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)

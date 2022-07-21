@@ -15,6 +15,8 @@
 #include "lvgl.h"
 #include "demos/lv_demos.h"
 
+extern void ui_init();
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -45,7 +47,11 @@ static void AppTask(void *param)
 
     s_lvgl_initialized = true;
 
+#if 1
+    ui_init();
+#else
     lv_demo_widgets();
+#endif
 
     for (;;)
     {
