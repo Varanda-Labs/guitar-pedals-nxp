@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+#define va_copy(d,s) ((d) = (s))
+
 /*====================
    Graphical settings
  *====================*/
