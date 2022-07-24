@@ -167,11 +167,11 @@ void init_audio()
     edma_config_t dmaConfig = {0};
     sai_transceiver_t saiConfig;
 
-//    BOARD_ConfigMPU();
-//    BOARD_InitBootPins();
-//    BOARD_InitBootClocks();
+    BOARD_ConfigMPU();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     CLOCK_InitAudioPll(&audioPllConfig);
-//    BOARD_InitDebugConsole();
+    BOARD_InitDebugConsole();
 
     /*Clock setting for LPI2C*/
     CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
@@ -244,6 +244,7 @@ void init_audio()
         {
             xfer.data     = Buffer + rx_index * BUFFER_SIZE;
             xfer.dataSize = BUFFER_SIZE;
+            printf("SAI_TransferReceiveEDMA\n");
             if (kStatus_Success == SAI_TransferReceiveEDMA(DEMO_SAI, &rxHandle, &xfer))
             {
                 rx_index++;

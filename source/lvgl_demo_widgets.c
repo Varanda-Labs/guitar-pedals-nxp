@@ -15,7 +15,10 @@
 #include "lvgl.h"
 #include "demos/lv_demos.h"
 
+#define HAVE_AUDIO
+
 extern void ui_init();
+extern void init_audio();
 
 /*******************************************************************************
  * Definitions
@@ -47,10 +50,10 @@ static void AppTask(void *param)
 
     s_lvgl_initialized = true;
 
-#if 1
-    ui_init();
+#ifdef ENABLE_AUDIO
+    init_audio();
 #else
-    lv_demo_widgets();
+    ui_init();
 #endif
 
     for (;;)
@@ -125,11 +128,16 @@ int main(void)
 {
     BaseType_t stat;
 
+#ifdef ENABLE_AUDIO
+    init_audio();
+#endif
+
     /* Init board hardware. */
     /* Set the eLCDIF read_qos priority high, to make sure eLCDIF
      * can fetch data in time when PXP is used.
      */
     *((volatile uint32_t *)0x41044100) = 5;
+
 
     BOARD_ConfigMPU();
     BOARD_ReconfigFlexSpiRxBuffer();
@@ -138,6 +146,8 @@ int main(void)
     BOARD_InitSemcPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+
+
 
     stat = xTaskCreate(AppTask, "lvgl", configMINIMAL_STACK_SIZE + 800, NULL, tskIDLE_PRIORITY + 2, NULL);
 
